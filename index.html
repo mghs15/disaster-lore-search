@@ -114,12 +114,12 @@ const addSample = () => {
   let data = "";
   
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', "./sample/20250327.csv", false);
+  xhr.open('GET', "./sample/20250424.csv", false);
   xhr.send(null);
   
   if(xhr.status == 200 || xhr.status == 304){
     data += xhr.responseText;
-    alert("国土地理院 2025/03/27 公開のデータです。実際に使用する際は最新版をダウンロードしてご利用ください。")
+    alert("国土地理院 2025/04/24 公開のデータです。実際に使用する際は最新版をダウンロードしてご利用ください。")
   }
   
   
