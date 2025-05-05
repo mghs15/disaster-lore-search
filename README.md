@@ -20,6 +20,8 @@ https://mghs15.github.io/disaster-lore-search/
 
 https://mghs15.github.io/disaster-lore-search/tilemap.html
 
+※[自然災害伝承碑等の GeoJSON データ](https://www.gsi.go.jp/bousaichiri/denshouhi_datainfo.html)を使用
+
 ## 特長
 * CSV の行全体や特定の列を対象として文字列検索（正規表現利用可）
 * 種別ごとの絞り込みも可
