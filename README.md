@@ -16,6 +16,9 @@ https://mghs15.github.io/disaster-lore-search/
     1. または、「サンプルデータ」ボタンを押して、サンプルをロードする。
 3. 各種条件を調整して、「絞り込み」ボタンを押す。
 
+（参考）カラム地図
+
+https://mghs15.github.io/disaster-lore-search/tilemap.html
 
 ## 特長
 * CSV の行全体や特定の列を対象として文字列検索（正規表現利用可）
