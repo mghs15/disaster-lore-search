@@ -16,7 +16,7 @@ https://mghs15.github.io/disaster-lore-search/
     1. または、「サンプルデータ」ボタンを押して、サンプルをロードする。
 3. 各種条件を調整して、「絞り込み」ボタンを押す。
 
-（参考）カラム地図
+（参考）ヒートマップタイル
 
 https://mghs15.github.io/disaster-lore-search/tilemap.html
 
