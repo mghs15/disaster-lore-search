@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>市町村ヒートマップタイル</title>
+    <script src="./muni.js"></script>
+    <style>
+        #chart {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;  /* 800px A4縦に収まる目安 */
+            margin: auto;
+            font-family: sans-serif;
+            font-size: 10px;
+        }
+        .pref-block {
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        .pref-label {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .tile {
+            display: inline-block;
+            margin: 1px;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #111;
+            box-sizing: border-box;
+        }
+        .tile.zero {
+            border: 1px dashed #111;
+        }
+        .tile.circle {
+            border-radius: 50%;
+        }
+        .tile:hover {
+            border: 1px solid #F00;
+            cursor: pointer;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 4px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="chart"></div>
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        const chart = document.getElementById("chart");
+        const tooltip = document.getElementById("tooltip");
+
+        // データの読み込み
+        fetch('./sample/20250424.geojson')
+            .then(response => response.json())
+            .then(json => {
+                const data = [];
+                const fts = json.features;
+                fts.forEach( f => {
+                  const code = f.properties.ID.split("-")[0];
+                  if(!muniDataset[code].value){
+                    muniDataset[code].value = 0;
+                  }
+                  muniDataset[code].value += 1;
+                });
+                Object.keys(muniDataset).forEach( key => {
+                  const d = muniDataset[key];
+                  if(!d.value) d.value = 0;
+                  data.push(muniDataset[key]);
+                });
+                drawTiles(data);
+            });
+
+        function drawTiles(data) {
+            const maxVal = Math.max(...data.map(d => d.value));
+            const grouped = {};
+            data.forEach(d => {
+                const prefCode = d.code.slice(0, 2);
+                if (!grouped[prefCode]) grouped[prefCode] = [];
+                grouped[prefCode].push(d);
+            });
+
+            const prefCodes = Object.keys(prefNames).sort((a, b) => a - b);
+
+            prefCodes.forEach(prefCode => {
+                const block = document.createElement('div');
+                block.className = 'pref-block';
+                block.style.width = prefCode === "01" ? '155px' : '75px';  // 北海道は2ブロック分
+                block.style.flex = 'none';
+                const label = document.createElement('div');
+                label.className = 'pref-label';
+                label.textContent = `${prefCode} ${prefNames[prefCode]}`;
+                block.appendChild(label);
+                
+                let cityCount = 0;
+                let cityZeroCount = 0;
+
+                const cities = grouped[prefCode] || [];
+                cities.forEach(city => {
+                    const tile = document.createElement('div');
+                    tile.className = 'tile';
+                    if (city.name.endsWith("町") || city.name.endsWith("村")) {
+                        tile.classList.add('circle');
+                    }
+                    tile.style.backgroundColor = getColor(city.value, maxVal);
+                    
+                    cityCount += 1;
+                    if (city.value < 1) {
+                        cityZeroCount += 1;
+                        tile.classList.add('zero');
+                    }
+                    
+                    tile.addEventListener('mouseover', (e) => {
+                        tooltip.style.display = 'block';
+                        tooltip.innerHTML = `
+                            ${city.name}<br>
+                            コード: ${city.code}<br>
+                            値: ${city.value}
+                        `;
+                    });
+                    tile.addEventListener('mousemove', (e) => {
+                        tooltip.style.left = `${e.pageX + 10}px`;
+                        tooltip.style.top = `${e.pageY - 20}px`;
+                    });
+                    tile.addEventListener('mouseout', () => {
+                        tooltip.style.display = 'none';
+                    });
+                    block.appendChild(tile);
+                });
+                
+                label.innerHTML += `<br>${Math.floor(100*(cityCount - cityZeroCount)/cityCount)}% (${cityCount - cityZeroCount}/${cityCount})`;
+
+                chart.appendChild(block);
+            });
+        }
+
+        function getColor(value, maxVal) {
+            if (value === 0) return 'rgb(255,255,255)';
+            const ratio = Math.log(value) / Math.log(maxVal);
+            const r = Math.round(255);
+            const g = Math.round(200 * (1 - ratio));
+            const b = Math.round(200 * (1 - ratio));
+            return `rgb(${r},${g},${b})`;
+        }
+        
+    </script>
+</body>
+</html>
