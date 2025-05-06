@@ -6,9 +6,7 @@
 
 ## 使い方
 
-ツールの URL 
-
-https://mghs15.github.io/disaster-lore-search/
+ツールの URL https://mghs15.github.io/disaster-lore-search/
 
 1. まずは手元にCSV データ（国土地理院提供の CSV と同形式）を準備する。
     1. または、サンプルデータ（条件は後述）を利用することができます。
@@ -16,9 +14,9 @@ https://mghs15.github.io/disaster-lore-search/
     1. または、「サンプルデータ」ボタンを押して、サンプルをロードする。
 3. 各種条件を調整して、「絞り込み」ボタンを押す。
 
-（参考）ヒートマップタイル
+### （参考）
 
-https://mghs15.github.io/disaster-lore-search/tilemap.html
+ヒートマップタイル https://mghs15.github.io/disaster-lore-search/tilemap.html
 
 * [自然災害伝承碑等の GeoJSON データ](https://www.gsi.go.jp/bousaichiri/denshouhi_datainfo.html)を使用
 * 市町村コード等は地理院地図のソースを流用
