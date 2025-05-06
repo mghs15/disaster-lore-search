@@ -147,10 +147,16 @@
         function getColor(value, maxVal) {
             if (value === 0) return 'rgb(255,255,255)';
             const ratio = Math.log(value) / Math.log(maxVal);
-            const r = Math.round(255);
-            const g = Math.round(200 * (1 - ratio));
-            const b = Math.round(200 * (1 - ratio));
-            return `rgb(${r},${g},${b})`;
+            
+            const h = 360; //Math.round(180 + 180 * ratio);
+            const s = 80;
+            const l = Math.round(50 + 45 * (1 - ratio));
+            return `hsl(${h} ${s}% ${l}%)`;
+            
+            //const r = Math.round(255);
+            //const g = Math.round(255 * ratio);
+            //const b = Math.round(255 * (1 - ratio));
+            //return `rgb(${r},${g},${b})`;
         }
         
     </script>
