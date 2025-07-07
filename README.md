@@ -22,6 +22,13 @@
 * 市町村コード等は地理院地図のソースを流用
 * コードの多くは ChatGPT による生成
 
+### （参考）
+
+提示された伝承碑を地図上で探すゲーム https://mghs15.github.io/disaster-lore-search/game.html
+
+* [自然災害伝承碑等の GeoJSON データ](https://www.gsi.go.jp/bousaichiri/denshouhi_datainfo.html)を使用
+* コードの多くは ChatGPT による生成
+
 ## 特長
 * CSV の行全体や特定の列を対象として文字列検索（正規表現利用可）
 * 種別ごとの絞り込みも可
@@ -37,3 +44,4 @@
   * https://maplibre.org/maplibre-gl-js-docs/example/cluster/
   * https://maplibre.org/maplibre-gl-js-docs/example/heatmap-layer/
 * 国土地理院最適化ベクトルタイル https://github.com/gsi-cyberjapan/optimal_bvmap
+
